@@ -1,20 +1,25 @@
 # Logo môn phái
 
-App đọc đúng 5 file dưới đây. Muốn dùng logo thật thì **ghi đè đúng tên file này**,
-không cần sửa code:
+App đọc file theo đúng tên dưới đây. Thay logo = **ghi đè đúng tên file**, không cần sửa code.
 
-| File | Nhãn hiện tại trong app | Màu nhận dạng |
+| File | Môn phái | Nguồn |
 | --- | --- | --- |
-| `class-1.png` | Môn Phái Tím | tím |
-| `class-2.png` | Môn Phái Lục | xanh bạc hà |
-| `class-3.png` | Môn Phái Lam | xanh dương |
-| `class-4.png` | Môn Phái Kim | vàng kim |
-| `class-5.png` | Môn Phái Hồng | hồng |
+| `thiet-y.png` | Thiết Y | `Thiet Y.png` |
+| `than-tuong.png` | Thần Tướng | `Than Tuong.png` |
+| `huyet-ha.png` | Huyết Hà | **chưa có** — xem ghi chú bên dưới |
+| `toai-mong.png` | Toái Mộng | `Toai mong.png` |
+| `long-ngam.png` | Long Ngâm | `Long Ngam.png` |
+| `cuu-linh.png` | Cửu Linh | `Cuu Linh.png` |
+| `to-van.png` | Tố Vấn | `To Van.png` |
 
-Ảnh hiện tại chỉ là **hình tạm** do máy dựng từ glyph dự phòng, chưa phải logo môn phái thật.
+Ảnh gốc tải lên nằm ở thư mục gốc repo. Ảnh trong thư mục này đã được xử lý lại:
+tách nền đen thành nền trong suốt (dùng độ sáng làm alpha), cắt sát viền, bo vuông
+và resize về 256 px.
 
-Yêu cầu ảnh: PNG nền trong suốt, vuông, cạnh 128–512 px là đẹp nhất (app co ảnh về
-ô ~22 px trên ghim và ~30 px trong bảng chọn).
+**Huyết Hà chưa có logo.** File `Huyet Ha.webp` được tải lên là ảnh mặt gấu mèo
+44×44, không phải huy hiệu môn phái, nên app đang dùng glyph SVG dự phòng màu đỏ.
+Chỉ cần bỏ `huyet-ha.png` (PNG nền trong, vuông, 128–512 px) vào thư mục này là
+logo hiện lên ngay, không phải sửa code.
 
-Đổi tên hiển thị: sửa `label` của các mục `class-*` trong `assets/js/config.js`.
-Nếu một file bị thiếu hoặc lỗi, app tự động hiện glyph SVG dự phòng thay vì vỡ giao diện.
+Đổi tên hiển thị: sửa `label` của các mục trong nhóm `Môn Phái` ở `assets/js/config.js`.
+Thiếu hoặc lỗi file thì app tự rơi về glyph dự phòng chứ không vỡ giao diện.

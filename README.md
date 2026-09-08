@@ -27,10 +27,12 @@ và không cần mã. Mã này nằm ở `DEFAULTS.leaderCode` trong `assets/js/
 ## Tính năng
 
 **Cắm ký hiệu**
-- 24 icon chia 4 nhóm: Đoàn Đội, Tài Nguyên, Chiến Thuật, Môn Phái.
-- Nhóm **Môn Phái** dùng logo ảnh (`assets/img/class/class-1..5.png`) thay cho glyph
-  vẽ tay; ghi đè đúng tên file là logo mới hiện ngay, không phải sửa code. Thiếu file
-  thì tự rơi về glyph SVG dự phòng. Xem `assets/img/class/README.md`.
+- 26 icon chia 4 nhóm: Đoàn Đội, Tài Nguyên, Chiến Thuật, Môn Phái.
+- Nhóm **Môn Phái** gồm 7 môn phái (Thiết Y, Thần Tướng, Huyết Hà, Toái Mộng,
+  Long Ngâm, Cửu Linh, Tố Vấn) dùng logo ảnh thay cho glyph vẽ tay; ghi đè đúng tên
+  file trong `assets/img/class/` là logo mới hiện ngay, không phải sửa code. Thiếu
+  file thì tự rơi về glyph SVG dự phòng — hiện Huyết Hà đang ở trạng thái này.
+  Xem `assets/img/class/README.md`.
 - 4 phe màu (Đỏ / Xanh / Trung Lập / Ghi Chú) — cùng một icon cắm được cho nhiều phe.
 - Chọn icon rồi click lên bản đồ, hoặc kéo thẳng icon từ bảng bên trái vào bản đồ.
   Giữ `Shift` khi thả để cắm liên tiếp nhiều cái.
@@ -81,7 +83,7 @@ assets/js/store.js         trạng thái, undo/redo, lưu localStorage
 assets/js/board.js         zoom/pan, kéo thả marker, lớp vẽ, xuất PNG
 assets/js/app.js           nối giao diện với store
 assets/img/guildwar-map.webp  bản đồ chiến trường mặc định (đã nén)
-assets/img/class/*.png        logo môn phái (hiện là hình tạm, xem README trong thư mục)
+assets/img/class/*.png        logo môn phái đã tách nền (xem README trong thư mục)
 Guildwar Map.png              ảnh gốc chưa nén, không dùng trực tiếp trong app
 ```
 

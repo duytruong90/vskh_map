@@ -79,23 +79,30 @@
              '<circle cx="12" cy="12" r="3.2" /><path d="M2.5 2.5 V7 M2.5 2.5 H7 M21.5 2.5 V7 M21.5 2.5 H17 M2.5 21.5 V17 M2.5 21.5 H7 M21.5 21.5 V17 M21.5 21.5 H17" />' }
 ,
 
-    { group: 'Môn Phái', id: 'class-1', label: 'Môn Phái Tím', accent: '#8b5cf6',
-      image: 'assets/img/class/class-1.png',
-      glyph: '<path d="M12 4.5 C9 7 8.5 10 10 12.5 C6.5 11.5 4 13 3.5 16.5 C7 15.5 9 17 10 20 L12 15 L14 20 C15 17 17 15.5 20.5 16.5 C20 13 17.5 11.5 14 12.5 C15.5 10 15 7 12 4.5 Z" />' },
-    { group: 'Môn Phái', id: 'class-2', label: 'Môn Phái Lục', accent: '#6ee7b7',
-      image: 'assets/img/class/class-2.png',
-      glyph: '<path d="M12 3 V21" /><path d="M8.5 7 H15.5" />' +
-             '<path d="M5 9 C3 13 4.5 18 9 20.5 M19 9 C21 13 19.5 18 15 20.5" />' },
-    { group: 'Môn Phái', id: 'class-3', label: 'Môn Phái Lam', accent: '#3b82f6',
-      image: 'assets/img/class/class-3.png',
+    { group: 'Môn Phái', id: 'thiet-y', label: 'Thiết Y', accent: '#f0b64a',
+      image: 'assets/img/class/thiet-y.png',
+      glyph: '<path d="M12 3 L20 6 V12 C20 16.5 16.6 19.8 12 21.5 C7.4 19.8 4 16.5 4 12 V6 Z" />' +
+             '<path d="M12 7.5 V16.5 M8.5 11 H15.5" />' },
+    { group: 'Môn Phái', id: 'than-tuong', label: 'Thần Tướng', accent: '#3b7bfe',
+      image: 'assets/img/class/than-tuong.png',
       glyph: '<path d="M13 3 C8 7.5 6 11.5 6.5 15 C7 18.5 9.5 20.5 13 20.5 C16 20.5 18 18.5 18 16 C18 13.5 16 12 14 12.5" />' +
              '<path d="M9 5.5 C5.5 9 4 12.5 4.5 16" />' },
-    { group: 'Môn Phái', id: 'class-4', label: 'Môn Phái Kim', accent: '#fbbf24',
-      image: 'assets/img/class/class-4.png',
-      glyph: '<path d="M12 3.5 L14 6 L12 8.5 L10 6 Z" />' +
-             '<path d="M6 6 C3 8 3 12 5.5 13.5 C4 16.5 6 20 9.5 20.5 L12 17 L14.5 20.5 C18 20 20 16.5 18.5 13.5 C21 12 21 8 18 6" />' },
-    { group: 'Môn Phái', id: 'class-5', label: 'Môn Phái Hồng', accent: '#fda4af',
-      image: 'assets/img/class/class-5.png',
+    { group: 'Môn Phái', id: 'huyet-ha', label: 'Huyết Hà', accent: '#d0453a',
+      glyph: '<path d="M12 3 C9 7.5 7.5 10.5 7.5 13 A4.5 4.5 0 0 0 16.5 13 C16.5 10.5 15 7.5 12 3 Z" />' +
+             '<path d="M3 18.5 C6 16.5 8 20.5 11 18.5 C14 16.5 16 20.5 21 18" />' },
+    { group: 'Môn Phái', id: 'toai-mong', label: 'Toái Mộng', accent: '#8fe6f5',
+      image: 'assets/img/class/toai-mong.png',
+      glyph: '<path d="M6 19 L18 5 M8.5 4.5 L19.5 15.5" />' +
+             '<path d="M4 21 C3 16 5.5 11 10 8" />' },
+    { group: 'Môn Phái', id: 'long-ngam', label: 'Long Ngâm', accent: '#6ee7b7',
+      image: 'assets/img/class/long-ngam.png',
+      glyph: '<path d="M12 3 V21" /><path d="M8.5 7 H15.5" />' +
+             '<path d="M5 9 C3 13 4.5 18 9 20.5 M19 9 C21 13 19.5 18 15 20.5" />' },
+    { group: 'Môn Phái', id: 'cuu-linh', label: 'Cửu Linh', accent: '#9a5dfe',
+      image: 'assets/img/class/cuu-linh.png',
+      glyph: '<path d="M12 4.5 C9 7 8.5 10 10 12.5 C6.5 11.5 4 13 3.5 16.5 C7 15.5 9 17 10 20 L12 15 L14 20 C15 17 17 15.5 20.5 16.5 C20 13 17.5 11.5 14 12.5 C15.5 10 15 7 12 4.5 Z" />' },
+    { group: 'Môn Phái', id: 'to-van', label: 'Tố Vấn', accent: '#feb8af',
+      image: 'assets/img/class/to-van.png',
       glyph: '<circle cx="12" cy="12" r="9" />' +
              '<path d="M12 4.5 C8 7 7 10.5 9 13 C11 15.5 10.5 18 8.5 19.5 M12 19.5 C16 17 17 13.5 15 11 C13 8.5 13.5 6 15.5 4.5" />' }
   ];
