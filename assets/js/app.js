@@ -373,6 +373,11 @@
     });
 
     $('btn-export-png').addEventListener('click', function () {
+      /* Trình duyệt cấm đọc canvas có ảnh file:// nên xuất PNG chỉ chạy qua http. */
+      if (location.protocol === 'file:') {
+        toast('Xuất PNG cần mở trang qua http:// (vd: python3 -m http.server) — mở file trực tiếp thì trình duyệt chặn đọc ảnh nền.', 'warn');
+        return;
+      }
       setStatus('đang dựng ảnh…', 'busy');
       board.exportPng().then(function (canvas) {
         canvas.toBlob(function (blob) {
@@ -384,7 +389,7 @@
       }).catch(function (err) {
         setStatus('sẵn sàng');
         /* Ảnh từ domain khác không cho phép đọc canvas. */
-        toast(err.message || 'Không xuất được ảnh (ảnh nền chặn truy cập).', 'error');
+        toast('Không xuất được ảnh: ảnh nền không cho phép đọc (CORS). Hãy dùng ảnh cùng domain hoặc tải ảnh lên từ máy.', 'error');
       });
     });
 

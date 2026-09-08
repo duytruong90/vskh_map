@@ -7,10 +7,15 @@ không cần build.
 ## Chạy thử
 
 ```bash
-# mở trực tiếp cũng được, nhưng nên chạy qua http để trình duyệt tải được ảnh SVG
-python3 -m http.server 8000
-# → http://localhost:8000
+git clone https://github.com/duytruong90/vskh_map.git
+cd vskh_map
+python3 -m http.server 8000     # hoặc: npx serve .
+# → mở http://localhost:8000
 ```
+
+Mở thẳng `index.html` bằng trình duyệt (`file://`) cũng chạy được: cắm icon, vẽ nét,
+lưu, xuất/nhập `.json` đều bình thường. Riêng **Xuất ảnh PNG** thì không — trình duyệt
+chặn đọc canvas có ảnh `file://`, nên tính năng này cần chạy qua `http://`.
 
 Đăng nhập demo: chọn **Chỉ huy** và nhập mã `phl2024`, hoặc chọn **Thành viên** (chỉ xem)
 và không cần mã. Mã này nằm ở `DEFAULTS.leaderCode` trong `assets/js/config.js`.
