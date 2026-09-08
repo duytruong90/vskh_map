@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>PHL Tactical Map — Bản đồ chiến thuật bang chiến</title>
+<meta name="description" content="Bản đồ chiến thuật tương tác: kéo thả đội hình, vẽ hướng tấn công, chia sẻ kế hoạch bang chiến.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 2 L28 7 v9 c0 7-5 12-12 14C9 28 4 23 4 16V7Z' fill='%23e8b23a'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+<!-- ĐĂNG NHẬP -->
+<div class="login-screen" id="login-screen">
+  <form class="login-card" id="login-form" autocomplete="off">
+    <div class="login-brand">
+      <svg viewBox="0 0 32 32" class="brand-mark" aria-hidden="true">
+        <path d="M16 2 L28 7 v9 c0 7-5 12-12 14C9 28 4 23 4 16V7Z" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M11 16 l4 4 l7-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <div>
+        <h1>PHL TACTICAL MAP</h1>
+        <p>Bản đồ chiến thuật bang chiến</p>
+      </div>
+    </div>
+
+    <label class="field">
+      <span>Tên hiển thị</span>
+      <input type="text" id="login-name" maxlength="24" placeholder="Nhập tên trong game" required>
+    </label>
+
+    <fieldset class="field">
+      <span>Vai trò</span>
+      <div class="role-picker">
+        <label><input type="radio" name="role" value="leader" checked><span>Chỉ huy — toàn quyền</span></label>
+        <label><input type="radio" name="role" value="member"><span>Thành viên — chỉ xem</span></label>
+      </div>
+    </fieldset>
+
+    <label class="field" id="code-field">
+      <span>Mã chỉ huy</span>
+      <input type="password" id="login-code" placeholder="phl2024">
+    </label>
+
+    <p class="login-error" id="login-error" role="alert" hidden></p>
+    <button type="submit" class="btn btn-primary btn-block">Vào bản đồ</button>
+    <p class="login-note">
+      Đăng nhập demo chạy hoàn toàn trên trình duyệt, chỉ dùng để phân vai chỉ huy / thành viên.
+      Đây <strong>không</strong> phải lớp bảo mật thật.
+    </p>
+  </form>
+</div>
+
+<!-- ỨNG DỤNG -->
+<div class="app" id="app" hidden>
+
+  <header class="topbar">
+    <div class="brand">
+      <svg viewBox="0 0 32 32" class="brand-mark" aria-hidden="true">
+        <path d="M16 2 L28 7 v9 c0 7-5 12-12 14C9 28 4 23 4 16V7Z" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M11 16 l4 4 l7-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <div class="brand-text">
+        <strong>PHL TACTICAL MAP <em class="version">v1.0</em></strong>
+        <span>Bản đồ chiến thuật bang chiến</span>
+      </div>
+    </div>
+
+    <div class="topbar-actions">
+      <span class="user-chip" id="user-chip">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c1.5-4 12.5-4 15 0"/></svg>
+        <b id="user-name">leader</b>
+        <em id="user-role">Chỉ huy</em>
+      </span>
+      <button class="btn btn-icon" id="btn-undo" title="Hoàn tác (Ctrl+Z)" aria-label="Hoàn tác">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h11a5 5 0 0 1 0 10h-6"/><path d="M8 4.5 3.5 9 8 13.5"/></svg>
+      </button>
+      <button class="btn btn-icon" id="btn-redo" title="Làm lại (Ctrl+Shift+Z)" aria-label="Làm lại">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 9H9a5 5 0 0 0 0 10h6"/><path d="M16 4.5 20.5 9 16 13.5"/></svg>
+      </button>
+      <button class="btn btn-danger" id="btn-logout">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4"/><path d="M10 8 6 12l4 4M6 12h9"/></svg>
+        Đăng xuất
+      </button>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar">
+    <div class="tool-group">
+      <span class="tool-label">Chế độ:</span>
+      <div class="seg" id="mode-group" role="group" aria-label="Chế độ thao tác">
+        <button class="seg-btn is-active" data-mode="select">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3 19 11.5 12.6 13 9.5 19.5Z"/></svg> Kéo Thả
+        </button>
+        <button class="seg-btn" data-mode="draw">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1-4.5L16 4.5a2.1 2.1 0 0 1 3 3L8 18.5Z"/></svg> Vẽ Nét
+        </button>
+        <button class="seg-btn" data-mode="pan">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v8M12 21v-4M3 12h8M21 12h-4"/><circle cx="12" cy="12" r="2.4"/></svg> Di Chuyển
+        </button>
+      </div>
+    </div>
+
+    <div class="tool-group" id="pen-tools" hidden>
+      <span class="tool-label">Nét:</span>
+      <div class="seg" id="tool-group" role="group" aria-label="Công cụ vẽ">
+        <button class="seg-btn is-active" data-tool="pen">Bút</button>
+        <button class="seg-btn" data-tool="arrow">Mũi Tên</button>
+        <button class="seg-btn" data-tool="eraser">Tẩy</button>
+      </div>
+    </div>
+
+    <div class="tool-group" id="color-tools">
+      <span class="tool-label">Màu:</span>
+      <div class="chips" id="color-group" role="group" aria-label="Màu"></div>
+    </div>
+
+    <div class="tool-group" id="width-tools">
+      <span class="tool-label">Độ dày:</span>
+      <div class="seg" id="width-group" role="group" aria-label="Độ dày nét"></div>
+    </div>
+
+    <div class="tool-group tool-group-end">
+      <button class="btn btn-ghost" id="btn-clear-strokes">Xoá nét vẽ</button>
+      <button class="btn btn-ghost" id="btn-clear-markers">Xoá icon</button>
+      <button class="btn btn-ghost btn-warn" id="btn-clear-all">Xoá tất cả</button>
+    </div>
+  </div>
+
+  <div class="body">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-head">
+        <h2 id="board-title">PHONG HỎA LUÂN</h2>
+        <p>Kéo thả icon vào bản đồ</p>
+        <div class="counter">
+          <span>Ký hiệu trên map</span>
+          <b id="marker-count">0</b>
+        </div>
+        <p class="hint" id="side-hint">Chọn icon rồi click lên bản đồ để thả nhanh, hoặc kéo trực tiếp. Giữ <kbd>Shift</kbd> khi thả để cắm liên tiếp.</p>
+      </div>
+
+      <div class="side-block" id="faction-block">
+        <h3>Phe / Màu icon</h3>
+        <div class="chips" id="side-group" role="group" aria-label="Phe"></div>
+      </div>
+
+      <div class="palette" id="palette"></div>
+
+      <div class="side-block" id="inspector" hidden>
+        <h3>Ký hiệu đang chọn</h3>
+        <label class="field">
+          <span>Nhãn hiển thị</span>
+          <input type="text" id="marker-label" maxlength="40" placeholder="VD: Tổ 1 giữ cầu">
+        </label>
+        <div class="field">
+          <span>Phe</span>
+          <div class="chips" id="marker-side-group" role="group" aria-label="Đổi phe ký hiệu"></div>
+        </div>
+        <label class="field">
+          <span>Kích thước <b id="marker-scale-val">100%</b></span>
+          <input type="range" id="marker-scale" min="60" max="200" step="10" value="100">
+        </label>
+        <div class="inspector-actions">
+          <button class="btn btn-ghost" id="btn-duplicate">Nhân đôi</button>
+          <button class="btn btn-ghost btn-warn" id="btn-delete-marker">Xoá (Del)</button>
+        </div>
+      </div>
+
+      <div class="side-block">
+        <h3>Bản đồ chiến trường</h3>
+        <div class="stack">
+          <label class="btn btn-ghost btn-block file-btn" id="map-file-label">
+            <input type="file" id="map-file" accept="image/*" hidden>
+            Tải ảnh lên
+          </label>
+          <button class="btn btn-ghost btn-block" id="btn-map-url">Nhập URL ảnh</button>
+          <button class="btn btn-ghost btn-block" id="btn-map-reset">Đặt lại bản đồ mặc định</button>
+        </div>
+        <p class="map-name" id="map-name">Bản đồ mặc định</p>
+      </div>
+
+      <div class="side-block">
+        <h3>Kế hoạch</h3>
+        <div class="stack">
+          <button class="btn btn-ghost btn-block" id="btn-export-json">Xuất file kế hoạch (.json)</button>
+          <label class="btn btn-ghost btn-block file-btn" id="import-label">
+            <input type="file" id="import-json" accept="application/json,.json" hidden>
+            Nhập file kế hoạch
+          </label>
+          <button class="btn btn-ghost btn-block" id="btn-export-png">Xuất ảnh PNG</button>
+          <button class="btn btn-ghost btn-block" id="btn-share">Sao chép link chia sẻ</button>
+        </div>
+      </div>
+
+      <footer class="sidebar-foot">
+        <span class="status-dot" id="status-dot"></span>
+        <span id="status-text">Trạng thái: sẵn sàng</span>
+      </footer>
+    </aside>
+
+    <section class="stage">
+      <div class="viewport" id="viewport" data-mode="select">
+        <div class="world" id="world">
+          <img class="map-image" id="map-image" alt="Bản đồ chiến trường" draggable="false">
+          <canvas class="draw-layer" id="draw-layer"></canvas>
+          <div class="marker-layer" id="marker-layer"></div>
+        </div>
+      </div>
+
+      <div class="view-controls">
+        <button class="btn btn-icon" id="btn-zoom-in" title="Phóng to" aria-label="Phóng to">+</button>
+        <button class="btn btn-icon" id="btn-zoom-out" title="Thu nhỏ" aria-label="Thu nhỏ">−</button>
+        <button class="btn btn-icon" id="btn-fit" title="Vừa màn hình" aria-label="Vừa màn hình">⤢</button>
+        <span class="zoom-readout" id="zoom-readout">100%</span>
+      </div>
+
+      <div class="legend" id="legend"></div>
+      <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Ẩn/hiện bảng công cụ">☰</button>
+    </section>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/icons.js"></script>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/board.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
