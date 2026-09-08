@@ -109,9 +109,10 @@
     }
   };
 
-  Board.prototype.strokePath = function (ctx, stroke, s) {
-    var color = CFG.penColor(stroke.color).color;
-    var width = CFG.penWidth(stroke.width).width;
+  Board.prototype.strokePath = function (ctx, stroke, s, opts) {
+    opts = opts || {};
+    var color = opts.color || CFG.penColor(stroke.color).color;
+    var width = CFG.penWidth(stroke.width).width * (opts.widthMul || 1);
     var pts = stroke.points;
     ctx.save();
     ctx.strokeStyle = color;
@@ -155,6 +156,39 @@
     var all = this.store.state.strokes;
     for (var i = 0; i < all.length; i++) this.strokePath(ctx, all[i], s);
     if (this.stroke && this.stroke.points.length > 1) this.strokePath(ctx, this.stroke, s);
+
+    /* Vệt sáng ngắn trên nét vừa vẽ xong. */
+    if (this.flash) {
+      var el = Math.min(1, (Date.now() - this.flash.start) / 300);
+      ctx.save();
+      ctx.globalAlpha = (1 - el) * 0.55;
+      ctx.globalCompositeOperation = 'lighter';
+      this.strokePath(ctx, this.flash.stroke, s, { color: '#ffffff', widthMul: 1 + 0.9 * (1 - el) });
+      ctx.restore();
+    }
+  };
+
+  Board.prototype.reducedMotion = function () {
+    return !!(global.matchMedia && global.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  };
+
+  Board.prototype.flashStroke = function (stroke) {
+    var self = this;
+    if (this.reducedMotion() || !global.requestAnimationFrame) return;
+    this.flash = { stroke: stroke, start: Date.now() };
+    if (this.flashRaf) return;
+    var step = function () {
+      if (!self.flash) { self.flashRaf = 0; return; }
+      if (Date.now() - self.flash.start >= 300) {
+        self.flash = null;
+        self.flashRaf = 0;
+        self.redrawStrokes();
+        return;
+      }
+      self.redrawStrokes();
+      self.flashRaf = global.requestAnimationFrame(step);
+    };
+    this.flashRaf = global.requestAnimationFrame(step);
   };
 
   Board.prototype.renderMarkers = function () {
@@ -417,6 +451,7 @@
         if (st.points.length > 2 || far) {
           delete st.pointerId;
           self.store.update(function (state) { state.strokes.push(st); }, 'stroke-add');
+          self.flashStroke(st);
         } else {
           self.redrawStrokes();
         }

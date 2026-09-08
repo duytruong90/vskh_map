@@ -25,7 +25,7 @@
   }
 
   function setStatus(text, kind) {
-    $('status-text').textContent = 'Trạng thái: ' + text;
+    $('status-text').textContent = text;
     $('status-dot').dataset.kind = kind || 'ok';
   }
 
@@ -109,9 +109,11 @@
     wrap.innerHTML = '';
     CFG.groups().forEach(function (g) {
       var block = document.createElement('div');
-      block.className = 'side-block';
-      var h = document.createElement('h3');
-      h.textContent = g.name;
+      block.className = 'panel-block';
+      var h = document.createElement('div');
+      h.className = 'rule';
+      h.innerHTML = '<span></span>';
+      h.firstChild.textContent = g.name;
       block.appendChild(h);
 
       var grid = document.createElement('div');
@@ -209,6 +211,7 @@
       b.classList.toggle('is-active', b.dataset.mode === mode);
     });
     $('pen-tools').hidden = mode !== 'draw';
+    $('pen-sep').hidden = mode !== 'draw';
   }
 
   /* ---------- Bảng thuộc tính ký hiệu ---------- */
@@ -231,6 +234,16 @@
     if (!marker || !isLeader()) { box.hidden = true; return; }
     box.hidden = false;
     renderMarkerSideChips(marker);
+
+    var icon = CFG.icon(marker.icon);
+    var sd = CFG.side(marker.side);
+    var token = $('inspector-token');
+    token.innerHTML = Icons.paletteSvg(icon, marker.side);
+    token.style.borderColor = sd.color;
+    token.style.background = 'rgba(0,0,0,.25)';
+    $('inspector-name').textContent = icon.label;
+    $('inspector-sub').textContent = sd.label + ' · ' + Math.round((marker.scale || 1) * 100) + '%';
+
     $('marker-label').value = marker.label || '';
     $('marker-label').placeholder = CFG.icon(marker.icon).label;
     var pct = Math.round((marker.scale || 1) * 100);
@@ -253,6 +266,8 @@
     });
     $('marker-scale').addEventListener('input', function () {
       $('marker-scale-val').textContent = this.value + '%';
+      var m = board.selectedId && board.findMarker(board.selectedId);
+      if (m) $('inspector-sub').textContent = CFG.side(m.side).label + ' · ' + this.value + '%';
       updateSelected({ scale: Number(this.value) / 100 });
     });
     $('btn-delete-marker').addEventListener('click', function () {
@@ -378,16 +393,16 @@
         toast('Xuất PNG cần mở trang qua http:// (vd: python3 -m http.server) — mở file trực tiếp thì trình duyệt chặn đọc ảnh nền.', 'warn');
         return;
       }
-      setStatus('đang dựng ảnh…', 'busy');
+      setStatus('Đang dựng ảnh…', 'busy');
       board.exportPng().then(function (canvas) {
         canvas.toBlob(function (blob) {
-          if (!blob) { toast('Không tạo được ảnh.', 'error'); setStatus('sẵn sàng'); return; }
+          if (!blob) { toast('Không tạo được ảnh.', 'error'); setStatus('Sẵn sàng'); return; }
           download(blob, 'vskh-tactical-' + stamp() + '.png');
-          setStatus('sẵn sàng');
+          setStatus('Sẵn sàng');
           toast('Đã xuất ảnh PNG.');
         }, 'image/png');
       }).catch(function (err) {
-        setStatus('sẵn sàng');
+        setStatus('Sẵn sàng');
         /* Ảnh từ domain khác không cho phép đọc canvas. */
         toast('Không xuất được ảnh: ảnh nền không cho phép đọc (CORS). Hãy dùng ảnh cùng domain hoặc tải ảnh lên từ máy.', 'error');
       });
@@ -501,6 +516,7 @@
     document.body.classList.toggle('is-viewer', !leader);
     board.editable = leader;
     $('user-name').textContent = session.name;
+    $('user-avatar').textContent = session.name.trim().slice(0, 2).toUpperCase();
     $('user-role').textContent = leader ? 'Chỉ huy' : 'Thành viên';
     $('user-chip').dataset.role = session.role;
     $('side-hint').innerHTML = leader
@@ -511,9 +527,9 @@
       markPending();
       renderInspector(null);
       setMode('select');
-      setStatus('chế độ chỉ xem', 'view');
+      setStatus('Chế độ chỉ xem', 'view');
     } else {
-      setStatus('sẵn sàng');
+      setStatus('Sẵn sàng');
     }
   }
 
@@ -557,7 +573,7 @@
       $('btn-redo').disabled = !store.canRedo();
       renderLegend();
       if (reason === 'storage-error') {
-        setStatus('không lưu được (ảnh quá lớn)', 'warn');
+        setStatus('Không lưu được', 'warn');
         toast('Không lưu được vào bộ nhớ trình duyệt — ảnh nền quá lớn. Hãy xuất file .json.', 'warn');
         return;
       }

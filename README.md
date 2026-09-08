@@ -59,7 +59,22 @@ và không cần mã. Mã này nằm ở `DEFAULTS.leaderCode` trong `assets/js/
 - Sao chép link chia sẻ (kế hoạch nén trong `#plan=` của URL).
 
 **Khung nhìn**: lăn chuột để zoom tại con trỏ, kéo nền hoặc giữ `Space` để di chuyển,
-nút `⤢` hoặc phím `F` để vừa màn hình.
+nút vừa khung hoặc phím `F` để vừa màn hình.
+
+## Giao diện
+
+Giao diện dùng ngôn ngữ thiết kế **Jade Ops**: bản đồ tràn khung, mọi bảng nổi lên trên
+bản đồ (thanh dọc bên trái, bảng đội hình, bảng thuộc tính, thanh chế độ ở giữa trên).
+Nền mực xanh với một màu nhấn ngọc bích duy nhất; tiêu đề dùng chữ có chân, còn mọi con
+số và nhãn hệ thống dùng chữ đơn cách.
+
+Ngọc bích **chỉ** dành cho điều khiển và trạng thái đang chọn — Đỏ / Xanh / Vàng vẫn
+thuộc riêng về phe trên bản đồ, để không nhầm màu nhấn với màu quân.
+
+Chuyển động khai báo trong `assets/css/styles.css` (biến `--t-*`, `--e-*`): thả icon
+220ms, chọn ký hiệu 140ms, đổi chế độ 180ms, mở bảng 260ms, nét vẽ xong loé sáng 300ms.
+Kéo marker không có transition để bám con trỏ tuyệt đối. Toàn bộ tôn trọng
+`prefers-reduced-motion`.
 
 ### Phím tắt
 
@@ -76,7 +91,9 @@ nút `⤢` hoặc phím `F` để vừa màn hình.
 
 ```
 index.html                 khung giao diện
-assets/css/styles.css      giao diện tối, tông hổ phách
+assets/css/fonts.css       khai báo @font-face cho chữ tự lưu trữ
+assets/fonts/*.woff2       Be Vietnam Pro, Noto Serif, JetBrains Mono (OFL)
+assets/css/styles.css      giao diện Jade Ops (token, thành phần, chuyển động)
 assets/js/config.js        bảng màu, bộ icon, hằng số (mã chỉ huy nằm ở đây)
 assets/js/icons.js         sinh SVG cho huy hiệu và ghim bản đồ
 assets/js/store.js         trạng thái, undo/redo, lưu localStorage
