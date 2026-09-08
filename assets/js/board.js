@@ -8,6 +8,7 @@
   var CANVAS_RES = 2;      /* Độ phân giải lớp vẽ so với kích thước bản đồ. */
   var MARKER_W = 44;
   var MARKER_H = 58;
+  var MARKER_LOGO = 46;    /* Icon môn phái là ảnh vuông, neo ở tâm. */
   var ERASER_RADIUS = 14;  /* Tính theo pixel bản đồ. */
 
   function Board(opts) {
@@ -180,10 +181,12 @@
       var labelEl = node.querySelector('.marker-label');
       if (labelEl.textContent !== (m.label || '')) labelEl.textContent = m.label || '';
       labelEl.hidden = !m.label;
+      var isLogo = Icons.isLogo(CFG.icon(m.icon));
+      node.classList.toggle('is-logo', isLogo);
       node.style.left = (m.x * 100) + '%';
       node.style.top = (m.y * 100) + '%';
-      node.style.width = (MARKER_W * (m.scale || 1)) + 'px';
-      node.style.height = (MARKER_H * (m.scale || 1)) + 'px';
+      node.style.width = ((isLogo ? MARKER_LOGO : MARKER_W) * (m.scale || 1)) + 'px';
+      node.style.height = ((isLogo ? MARKER_LOGO : MARKER_H) * (m.scale || 1)) + 'px';
       node.classList.toggle('is-selected', m.id === self.selectedId);
     });
 
@@ -499,26 +502,31 @@
         ctx.textAlign = 'center';
         ctx.font = '600 13px system-ui, sans-serif';
         items.forEach(function (it) {
-          var w = MARKER_W * (it.m.scale || 1), h = MARKER_H * (it.m.scale || 1);
-          var x = it.m.x * s.w - w / 2, y = it.m.y * s.h - h;
-          ctx.drawImage(it.img, x, y, w, h);
-          if (it.logo) {
-            /* viewBox 48x64 vẽ theo kiểu "meet": logo 22x22 quanh tâm (24,24). */
-            var k = Math.min(w / 48, h / 64);
-            var ox = x + (w - 48 * k) / 2, oy = y + (h - 64 * k) / 2;
-            var box = 22 * k;
+          var sc = it.m.scale || 1;
+          var isLogo = !!CFG.icon(it.m.icon).image;
+          var w = (isLogo ? MARKER_LOGO : MARKER_W) * sc;
+          var h = (isLogo ? MARKER_LOGO : MARKER_H) * sc;
+          var cx = it.m.x * s.w;
+          /* Ghim neo ở mũi nhọn dưới, icon ảnh neo ở tâm. */
+          var y = isLogo ? it.m.y * s.h - h / 2 : it.m.y * s.h - h;
+          ctx.drawImage(it.img, cx - w / 2, y, w, h);
+
+          if (isLogo && it.logo) {
+            var box = w * 0.76;
             var ar = it.logo.naturalWidth / it.logo.naturalHeight || 1;
             var lw = ar >= 1 ? box : box * ar;
             var lh = ar >= 1 ? box / ar : box;
-            ctx.drawImage(it.logo, ox + 24 * k - lw / 2, oy + 24 * k - lh / 2, lw, lh);
+            ctx.drawImage(it.logo, cx - lw / 2, y + h / 2 - lh / 2, lw, lh);
           }
+
           var text = it.m.label;
           if (!text) return;
+          var ty = y + h + (isLogo ? 13 : -1);
           ctx.lineWidth = 3;
           ctx.strokeStyle = 'rgba(0,0,0,.8)';
           ctx.fillStyle = '#fff';
-          ctx.strokeText(text, it.m.x * s.w, it.m.y * s.h + 15);
-          ctx.fillText(text, it.m.x * s.w, it.m.y * s.h + 15);
+          ctx.strokeText(text, cx, ty);
+          ctx.fillText(text, cx, ty);
         });
         return out;
       });

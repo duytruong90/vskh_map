@@ -498,18 +498,20 @@ body.sidebar-hidden .sidebar { display: none; }
   box-shadow: 0 0 0 1px var(--gold) inset;
 }
 .icon-emblem { width: 42px; height: 42px; }
-/* Logo môn phái phủ lên huy hiệu tròn trong bảng chọn. */
+/* Icon môn phái: chính logo là icon, chỉ có vòng phe mỏng phía sau. */
 .icon-tile { position: relative; }
+.emblem-ring { width: 42px; height: 42px; }
 .emblem-logo {
   position: absolute;
-  top: 12px;
+  top: 17px;            /* padding 12px + (42-32)/2 → canh giữa vòng phe */
   left: 50%;
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   transform: translateX(-50%);
   object-fit: contain;
   pointer-events: none;
 }
+.icon-tile.logo-missing .emblem-logo { display: none; }
 
 .sidebar-foot {
   display: flex;
@@ -590,17 +592,22 @@ body.sidebar-hidden .sidebar { display: none; }
 }
 .marker:active { cursor: grabbing; }
 .marker-svg { width: 100%; height: 100%; }
-/* Logo môn phái nằm trong đầu ghim (tâm ở 37.5% chiều cao của viewBox 48x64). */
+
+/* Marker môn phái: ảnh logo là icon, neo ở tâm thay vì mũi ghim. */
+.marker.is-logo { transform: translate(-50%, -50%); }
+.marker-ring { width: 100%; height: 100%; }
 .marker-logo {
   position: absolute;
   left: 50%;
-  top: 37.5%;
-  width: 45%;
-  height: 34%;
+  top: 50%;
+  width: 76%;
+  height: 76%;
   transform: translate(-50%, -50%);
   object-fit: contain;
   pointer-events: none;
 }
+.marker.logo-missing .marker-logo { display: none; }
+.marker.is-logo .marker-label { top: 100%; margin-top: 3px; }
 .marker-label {
   position: absolute;
   top: 100%;

@@ -12,16 +12,25 @@
            'stroke-linecap="round" stroke-linejoin="round">' + icon.glyph + '</g>';
   }
 
-  /* Logo ảnh phủ lên trên; nếu thiếu file thì tự ẩn để lộ glyph SVG bên dưới. */
-  function logoImg(icon, cls) {
-    if (!icon.image) return '';
-    return '<img class="' + cls + '" src="' + icon.image + '" alt="" draggable="false" ' +
-           'onerror="this.style.display=&quot;none&quot;">';
+  /* Vòng phe mỏng phía sau logo — giữ để phân biệt phe, không che logo. */
+  function factionRing(sd, viewBox) {
+    return '<svg viewBox="0 0 48 48" class="' + viewBox + '" aria-hidden="true">' +
+             '<circle cx="24" cy="24" r="22" fill="' + sd.deep + '" fill-opacity="0.34"/>' +
+             '<circle cx="24" cy="24" r="22" fill="none" stroke="' + sd.color + '" stroke-width="2.5"/>' +
+           '</svg>';
+  }
+
+  /* Icon dùng ảnh (môn phái): chính ảnh là icon, không lồng vào ghim/huy hiệu. */
+  function logoOnly(icon, sd, ringCls, imgCls) {
+    return factionRing(sd, ringCls) +
+      '<img class="' + imgCls + '" src="' + icon.image + '" alt="" draggable="false" ' +
+      'onerror="this.closest(&quot;.icon-tile,.marker&quot;).classList.add(&quot;logo-missing&quot;)">';
   }
 
   /* Huy hiệu tròn dùng cho bảng chọn bên trái. */
   function paletteSvg(icon, side) {
     var sd = CFG.side(side);
+    if (icon.image) return logoOnly(icon, sd, 'emblem-ring', 'emblem-logo');
     var uid = 'pg-' + icon.id + '-' + sd.id;
     return '' +
       '<svg viewBox="0 0 48 48" class="icon-emblem" aria-hidden="true">' +
@@ -34,12 +43,13 @@
         '<circle cx="24" cy="24" r="21" fill="url(#' + uid + ')" stroke="' + sd.color + '" stroke-width="2"/>' +
         '<circle cx="24" cy="24" r="17" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="1"/>' +
         '<g transform="translate(12 12)">' + glyphGroup(icon, '#fff', 1) + '</g>' +
-      '</svg>' + logoImg(icon, 'emblem-logo');
+      '</svg>';
   }
 
   /* Ghim cắm trên bản đồ. */
   function markerSvg(icon, side) {
     var sd = CFG.side(side);
+    if (icon.image) return logoOnly(icon, sd, 'marker-ring', 'marker-logo');
     var uid = 'mk-' + Math.random().toString(36).slice(2, 9);
     return '' +
       '<svg viewBox="0 0 48 64" class="marker-svg" aria-hidden="true">' +
@@ -54,8 +64,8 @@
           'fill="url(#' + uid + ')" stroke="rgba(12,10,6,.85)" stroke-width="2.5"/>' +
         '<circle cx="24" cy="24" r="14" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1.2"/>' +
         '<g transform="translate(12 12)">' + glyphGroup(icon, '#fff', 1) + '</g>' +
-      '</svg>' + logoImg(icon, 'marker-logo');
+      '</svg>';
   }
 
-  global.VSKHIcons = { paletteSvg: paletteSvg, markerSvg: markerSvg };
+  global.VSKHIcons = { paletteSvg: paletteSvg, markerSvg: markerSvg, isLogo: function (icon) { return !!(icon && icon.image); } };
 })(window);
