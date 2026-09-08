@@ -12,6 +12,13 @@
            'stroke-linecap="round" stroke-linejoin="round">' + icon.glyph + '</g>';
   }
 
+  /* Logo ảnh phủ lên trên; nếu thiếu file thì tự ẩn để lộ glyph SVG bên dưới. */
+  function logoImg(icon, cls) {
+    if (!icon.image) return '';
+    return '<img class="' + cls + '" src="' + icon.image + '" alt="" draggable="false" ' +
+           'onerror="this.style.display=&quot;none&quot;">';
+  }
+
   /* Huy hiệu tròn dùng cho bảng chọn bên trái. */
   function paletteSvg(icon, side) {
     var sd = CFG.side(side);
@@ -27,7 +34,7 @@
         '<circle cx="24" cy="24" r="21" fill="url(#' + uid + ')" stroke="' + sd.color + '" stroke-width="2"/>' +
         '<circle cx="24" cy="24" r="17" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="1"/>' +
         '<g transform="translate(12 12)">' + glyphGroup(icon, '#fff', 1) + '</g>' +
-      '</svg>';
+      '</svg>' + logoImg(icon, 'emblem-logo');
   }
 
   /* Ghim cắm trên bản đồ. */
@@ -47,7 +54,7 @@
           'fill="url(#' + uid + ')" stroke="rgba(12,10,6,.85)" stroke-width="2.5"/>' +
         '<circle cx="24" cy="24" r="14" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1.2"/>' +
         '<g transform="translate(12 12)">' + glyphGroup(icon, '#fff', 1) + '</g>' +
-      '</svg>';
+      '</svg>' + logoImg(icon, 'marker-logo');
   }
 
   global.VSKHIcons = { paletteSvg: paletteSvg, markerSvg: markerSvg };

@@ -77,6 +77,27 @@
     { group: 'Chiến Thuật', id: 'muc-tieu', label: 'Mục Tiêu',
       glyph: '<path d="M4 4 L10 10 M20 4 L14 10 M4 20 L10 14 M20 20 L14 14" />' +
              '<circle cx="12" cy="12" r="3.2" /><path d="M2.5 2.5 V7 M2.5 2.5 H7 M21.5 2.5 V7 M21.5 2.5 H17 M2.5 21.5 V17 M2.5 21.5 H7 M21.5 21.5 V17 M21.5 21.5 H17" />' }
+,
+
+    { group: 'Môn Phái', id: 'class-1', label: 'Môn Phái Tím', accent: '#8b5cf6',
+      image: 'assets/img/class/class-1.png',
+      glyph: '<path d="M12 4.5 C9 7 8.5 10 10 12.5 C6.5 11.5 4 13 3.5 16.5 C7 15.5 9 17 10 20 L12 15 L14 20 C15 17 17 15.5 20.5 16.5 C20 13 17.5 11.5 14 12.5 C15.5 10 15 7 12 4.5 Z" />' },
+    { group: 'Môn Phái', id: 'class-2', label: 'Môn Phái Lục', accent: '#6ee7b7',
+      image: 'assets/img/class/class-2.png',
+      glyph: '<path d="M12 3 V21" /><path d="M8.5 7 H15.5" />' +
+             '<path d="M5 9 C3 13 4.5 18 9 20.5 M19 9 C21 13 19.5 18 15 20.5" />' },
+    { group: 'Môn Phái', id: 'class-3', label: 'Môn Phái Lam', accent: '#3b82f6',
+      image: 'assets/img/class/class-3.png',
+      glyph: '<path d="M13 3 C8 7.5 6 11.5 6.5 15 C7 18.5 9.5 20.5 13 20.5 C16 20.5 18 18.5 18 16 C18 13.5 16 12 14 12.5" />' +
+             '<path d="M9 5.5 C5.5 9 4 12.5 4.5 16" />' },
+    { group: 'Môn Phái', id: 'class-4', label: 'Môn Phái Kim', accent: '#fbbf24',
+      image: 'assets/img/class/class-4.png',
+      glyph: '<path d="M12 3.5 L14 6 L12 8.5 L10 6 Z" />' +
+             '<path d="M6 6 C3 8 3 12 5.5 13.5 C4 16.5 6 20 9.5 20.5 L12 17 L14.5 20.5 C18 20 20 16.5 18.5 13.5 C21 12 21 8 18 6" />' },
+    { group: 'Môn Phái', id: 'class-5', label: 'Môn Phái Hồng', accent: '#fda4af',
+      image: 'assets/img/class/class-5.png',
+      glyph: '<circle cx="12" cy="12" r="9" />' +
+             '<path d="M12 4.5 C8 7 7 10.5 9 13 C11 15.5 10.5 18 8.5 19.5 M12 19.5 C16 17 17 13.5 15 11 C13 8.5 13.5 6 15.5 4.5" />' }
   ];
 
   var DEFAULTS = {

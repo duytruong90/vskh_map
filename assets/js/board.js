@@ -476,16 +476,25 @@
       });
     }
 
+    /* Logo môn phái là file rời, thiếu thì bỏ qua chứ không làm hỏng cả bản xuất. */
+    function loadLogo(src) {
+      return loadImage(src).catch(function () { return null; });
+    }
+
     return loadImage(this.store.state.map.url).then(function (bg) {
       ctx.drawImage(bg, 0, 0, s.w, s.h);
       ctx.drawImage(self.canvas, 0, 0, s.w, s.h);
 
       var markers = self.store.state.markers;
       return Promise.all(markers.map(function (m) {
-        var svg = Icons.markerSvg(CFG.icon(m.icon), m.side);
+        var icon = CFG.icon(m.icon);
+        /* markerSvg có thể kèm thẻ <img>; chỉ lấy phần <svg> để rasterise. */
+        var svg = Icons.markerSvg(icon, m.side).replace(/<img[\s\S]*$/, '');
         var full = '<svg xmlns="http://www.w3.org/2000/svg" ' + svg.slice(4);
-        return loadImage('data:image/svg+xml;charset=utf-8,' + encodeURIComponent(full))
-          .then(function (img) { return { img: img, m: m }; });
+        return Promise.all([
+          loadImage('data:image/svg+xml;charset=utf-8,' + encodeURIComponent(full)),
+          icon.image ? loadLogo(icon.image) : null
+        ]).then(function (pair) { return { img: pair[0], logo: pair[1], m: m }; });
       })).then(function (items) {
         ctx.textAlign = 'center';
         ctx.font = '600 13px system-ui, sans-serif';
@@ -493,6 +502,16 @@
           var w = MARKER_W * (it.m.scale || 1), h = MARKER_H * (it.m.scale || 1);
           var x = it.m.x * s.w - w / 2, y = it.m.y * s.h - h;
           ctx.drawImage(it.img, x, y, w, h);
+          if (it.logo) {
+            /* viewBox 48x64 vẽ theo kiểu "meet": logo 22x22 quanh tâm (24,24). */
+            var k = Math.min(w / 48, h / 64);
+            var ox = x + (w - 48 * k) / 2, oy = y + (h - 64 * k) / 2;
+            var box = 22 * k;
+            var ar = it.logo.naturalWidth / it.logo.naturalHeight || 1;
+            var lw = ar >= 1 ? box : box * ar;
+            var lh = ar >= 1 ? box / ar : box;
+            ctx.drawImage(it.logo, ox + 24 * k - lw / 2, oy + 24 * k - lh / 2, lw, lh);
+          }
           var text = it.m.label;
           if (!text) return;
           ctx.lineWidth = 3;
