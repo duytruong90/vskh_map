@@ -87,13 +87,13 @@
     minZoom: 0.15,
     maxZoom: 6,
     markerScale: 1,
-    storageKey: 'phl-tactical-map/board/v1',
-    sessionKey: 'phl-tactical-map/session/v1',
+    storageKey: 'vskh-tactical-map/board/v1',
+    sessionKey: 'vskh-tactical-map/session/v1',
     /* Mật khẩu demo phía client — chỉ để phân vai, KHÔNG phải bảo mật thật. */
-    leaderCode: 'phl2024'
+    leaderCode: 'vskh2024'
   };
 
-  global.PHLConfig = {
+  global.VSKHConfig = {
     SIDES: SIDES,
     PEN_COLORS: PEN_COLORS,
     PEN_WIDTHS: PEN_WIDTHS,

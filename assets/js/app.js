@@ -2,9 +2,9 @@
 (function (global) {
   'use strict';
 
-  var CFG = global.PHLConfig;
-  var Icons = global.PHLIcons;
-  var SU = global.PHLStore;
+  var CFG = global.VSKHConfig;
+  var Icons = global.VSKHIcons;
+  var SU = global.VSKHStore;
   var D = CFG.DEFAULTS;
 
   var $ = function (id) { return document.getElementById(id); };
@@ -349,7 +349,7 @@
   function bindPlanControls() {
     $('btn-export-json').addEventListener('click', function () {
       var blob = new Blob([JSON.stringify(store.state, null, 2)], { type: 'application/json' });
-      download(blob, 'phl-tactical-' + stamp() + '.json');
+      download(blob, 'vskh-tactical-' + stamp() + '.json');
       toast('Đã xuất file kế hoạch.');
     });
 
@@ -382,7 +382,7 @@
       board.exportPng().then(function (canvas) {
         canvas.toBlob(function (blob) {
           if (!blob) { toast('Không tạo được ảnh.', 'error'); setStatus('sẵn sàng'); return; }
-          download(blob, 'phl-tactical-' + stamp() + '.png');
+          download(blob, 'vskh-tactical-' + stamp() + '.png');
           setStatus('sẵn sàng');
           toast('Đã xuất ảnh PNG.');
         }, 'image/png');
@@ -526,7 +526,7 @@
     store.load();
     loadFromHash();
 
-    board = new global.PHLBoard({
+    board = new global.VSKHBoard({
       viewport: $('viewport'),
       world: $('world'),
       image: $('map-image'),
@@ -548,7 +548,7 @@
     });
 
     /* Cửa sổ gỡ lỗi / tự động hoá. */
-    global.PHLApp = { store: store, board: board };
+    global.VSKHApp = { store: store, board: board };
 
     store.subscribe(function (state, reason) {
       $('marker-count').textContent = state.markers.length;

@@ -1,4 +1,4 @@
-# PHL Tactical Map
+# VSKH Tactical Map
 
 Bản đồ chiến thuật tương tác cho bang chiến — kéo thả đội hình lên bản đồ, vẽ hướng
 tấn công, lưu và chia sẻ kế hoạch. Chạy hoàn toàn phía trình duyệt: không cần server,
@@ -17,7 +17,7 @@ Mở thẳng `index.html` bằng trình duyệt (`file://`) cũng chạy đượ
 lưu, xuất/nhập `.json` đều bình thường. Riêng **Xuất ảnh PNG** thì không — trình duyệt
 chặn đọc canvas có ảnh `file://`, nên tính năng này cần chạy qua `http://`.
 
-Đăng nhập demo: chọn **Chỉ huy** và nhập mã `phl2024`, hoặc chọn **Thành viên** (chỉ xem)
+Đăng nhập demo: chọn **Chỉ huy** và nhập mã `vskh2024`, hoặc chọn **Thành viên** (chỉ xem)
 và không cần mã. Mã này nằm ở `DEFAULTS.leaderCode` trong `assets/js/config.js`.
 
 > Lớp đăng nhập chạy hoàn toàn trên trình duyệt và chỉ dùng để phân vai chỉ huy /

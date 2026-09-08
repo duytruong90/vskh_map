@@ -2,7 +2,7 @@
 (function (global) {
   'use strict';
 
-  var CFG = global.PHLConfig;
+  var CFG = global.VSKHConfig;
   var D = CFG.DEFAULTS;
   var HISTORY_LIMIT = 60;
 
@@ -166,5 +166,5 @@
     this.emit(reason || 'replace');
   };
 
-  global.PHLStore = { Store: Store, uid: uid, blank: blank, sanitize: sanitize, clone: clone };
+  global.VSKHStore = { Store: Store, uid: uid, blank: blank, sanitize: sanitize, clone: clone };
 })(window);

@@ -2,7 +2,7 @@
 (function (global) {
   'use strict';
 
-  var CFG = global.PHLConfig;
+  var CFG = global.VSKHConfig;
 
   function glyphGroup(icon, stroke, scale) {
     var s = scale || 1;
@@ -50,5 +50,5 @@
       '</svg>';
   }
 
-  global.PHLIcons = { paletteSvg: paletteSvg, markerSvg: markerSvg };
+  global.VSKHIcons = { paletteSvg: paletteSvg, markerSvg: markerSvg };
 })(window);
