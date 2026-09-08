@@ -13,7 +13,7 @@
   function blank() {
     return {
       version: 1,
-      map: { url: D.mapUrl, width: D.mapWidth, height: D.mapHeight, name: 'Bản đồ mặc định' },
+      map: { url: D.mapUrl, width: D.mapWidth, height: D.mapHeight, name: D.mapName },
       markers: [],
       strokes: [],
       updatedAt: Date.now()

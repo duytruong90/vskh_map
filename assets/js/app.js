@@ -323,7 +323,7 @@
     });
 
     $('btn-map-reset').addEventListener('click', function () {
-      setMap(D.mapUrl, 'Bản đồ mặc định').catch(function (err) { toast(err.message, 'error'); });
+      setMap(D.mapUrl, D.mapName).catch(function (err) { toast(err.message, 'error'); });
     });
   }
 
@@ -391,7 +391,7 @@
     $('btn-share').addEventListener('click', function () {
       var payload = SU.clone(store.state);
       if (/^data:/.test(payload.map.url)) {
-        payload.map = { url: D.mapUrl, width: D.mapWidth, height: D.mapHeight, name: 'Bản đồ mặc định' };
+        payload.map = { url: D.mapUrl, width: D.mapWidth, height: D.mapHeight, name: D.mapName };
         toast('Ảnh tải lên không kèm được trong link — link dùng bản đồ mặc định.', 'warn');
       }
       var encoded = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));

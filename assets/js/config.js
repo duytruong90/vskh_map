@@ -80,9 +80,10 @@
   ];
 
   var DEFAULTS = {
-    mapUrl: 'assets/img/default-map.svg',
-    mapWidth: 1600,
-    mapHeight: 1000,
+    mapUrl: 'assets/img/guildwar-map.webp',
+    mapName: 'Guild War Map',
+    mapWidth: 1825,
+    mapHeight: 1018,
     minZoom: 0.15,
     maxZoom: 6,
     markerScale: 1,

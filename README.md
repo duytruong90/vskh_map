@@ -35,7 +35,10 @@ và không cần mã. Mã này nằm ở `DEFAULTS.leaderCode` trong `assets/js/
   (kể cả "Xoá tất cả").
 
 **Bản đồ nền**
-- Bản đồ mặc định vẽ sẵn bằng SVG (`assets/img/default-map.svg`).
+- Bản đồ mặc định là map bang chiến Sword of Justice (`assets/img/guildwar-map.webp`,
+  1825×1018). Ảnh gốc `Guildwar Map.png` (2.0 MB) vẫn nằm ở thư mục gốc làm bản lưu;
+  bản dùng trong app đã cắt viền tối và nén WebP q92 còn 163 KB (PSNR 44 dB — mắt
+  thường không phân biệt được).
 - Tải ảnh riêng từ máy, hoặc dán URL ảnh. Kích thước ảnh được đo tự động, ký hiệu
   lưu theo toạ độ tương đối nên đổi bản đồ không lệch tỉ lệ.
 
@@ -69,7 +72,8 @@ assets/js/icons.js         sinh SVG cho huy hiệu và ghim bản đồ
 assets/js/store.js         trạng thái, undo/redo, lưu localStorage
 assets/js/board.js         zoom/pan, kéo thả marker, lớp vẽ, xuất PNG
 assets/js/app.js           nối giao diện với store
-assets/img/default-map.svg bản đồ chiến trường mặc định
+assets/img/guildwar-map.webp  bản đồ chiến trường mặc định (đã nén)
+Guildwar Map.png              ảnh gốc chưa nén, không dùng trực tiếp trong app
 ```
 
 Không dùng thư viện ngoài, không có bước build — script thường, chạy được cả khi mở
