@@ -118,7 +118,7 @@
     storageKey: 'vskh-tactical-map/board/v1',
     sessionKey: 'vskh-tactical-map/session/v1',
     /* Mật khẩu demo phía client — chỉ để phân vai, KHÔNG phải bảo mật thật. */
-    leaderCode: 'vskh2024'
+    leaderCode: 'vskh2026'
   };
 
   global.VSKHConfig = {

@@ -17,7 +17,7 @@ Mở thẳng `index.html` bằng trình duyệt (`file://`) cũng chạy đượ
 lưu, xuất/nhập `.json` đều bình thường. Riêng **Xuất ảnh PNG** thì không — trình duyệt
 chặn đọc canvas có ảnh `file://`, nên tính năng này cần chạy qua `http://`.
 
-Đăng nhập demo: chọn **Chỉ huy** và nhập mã `vskh2024`, hoặc chọn **Thành viên** (chỉ xem)
+Đăng nhập demo: chọn **Chỉ huy** và nhập mã `vskh2026`, hoặc chọn **Thành viên** (chỉ xem)
 và không cần mã. Mã này nằm ở `DEFAULTS.leaderCode` trong `assets/js/config.js`.
 
 > Lớp đăng nhập chạy hoàn toàn trên trình duyệt và chỉ dùng để phân vai chỉ huy /
@@ -63,15 +63,15 @@ nút vừa khung hoặc phím `F` để vừa màn hình.
 
 ## Cập nhật bản mới (quan trọng)
 
-`index.html` gọi CSS/JS kèm tham số phiên bản (`styles.css?v=2.0.0`). Trình duyệt coi
+`index.html` gọi CSS/JS kèm tham số phiên bản (`styles.css?v=2.0.1`). Trình duyệt coi
 mỗi phiên bản là một file khác nhau, nên người dùng **không bị kẹt bản cũ trong cache**
 khi bạn đẩy bản mới.
 
 Mỗi lần sửa CSS hoặc JS rồi phát hành, nhớ tăng số này ở cả 7 dòng trong `index.html`:
 
 ```bash
-sed -i 's/?v=2\.0\.0/?v=2.0.1/g' index.html     # Linux/macOS
-(Get-Content index.html) -replace '\?v=2\.0\.0','?v=2.0.1' | Set-Content index.html   # PowerShell
+sed -i 's/?v=2\.0\.1/?v=2.0.2/g' index.html     # Linux/macOS
+(Get-Content index.html) -replace '\?v=2\.0\.1','?v=2.0.2' | Set-Content index.html   # PowerShell
 ```
 
 Quên tăng số thì người đã mở trang trước đó có thể vẫn thấy giao diện cũ cho tới khi họ
