@@ -61,6 +61,22 @@ và không cần mã. Mã này nằm ở `DEFAULTS.leaderCode` trong `assets/js/
 **Khung nhìn**: lăn chuột để zoom tại con trỏ, kéo nền hoặc giữ `Space` để di chuyển,
 nút vừa khung hoặc phím `F` để vừa màn hình.
 
+## Cập nhật bản mới (quan trọng)
+
+`index.html` gọi CSS/JS kèm tham số phiên bản (`styles.css?v=2.0.0`). Trình duyệt coi
+mỗi phiên bản là một file khác nhau, nên người dùng **không bị kẹt bản cũ trong cache**
+khi bạn đẩy bản mới.
+
+Mỗi lần sửa CSS hoặc JS rồi phát hành, nhớ tăng số này ở cả 7 dòng trong `index.html`:
+
+```bash
+sed -i 's/?v=2\.0\.0/?v=2.0.1/g' index.html     # Linux/macOS
+(Get-Content index.html) -replace '\?v=2\.0\.0','?v=2.0.1' | Set-Content index.html   # PowerShell
+```
+
+Quên tăng số thì người đã mở trang trước đó có thể vẫn thấy giao diện cũ cho tới khi họ
+tự bấm Ctrl+F5.
+
 ## Giao diện
 
 Giao diện dùng ngôn ngữ thiết kế **Jade Ops**: bản đồ tràn khung, mọi bảng nổi lên trên
