@@ -123,15 +123,36 @@
     minZoom: 0.15,
     maxZoom: 6,
     markerScale: 1,
-    storageKey: 'vskh-tactical-map/board/v1',
-    themeKey: 'vskh-tactical-map/theme/v1',
+    storageKey: 'nth-tactical-map/board/v1',
+    themeKey: 'nth-tactical-map/theme/v1',
     defaultTheme: 'jade',
-    sessionKey: 'vskh-tactical-map/session/v1',
+    sessionKey: 'nth-tactical-map/session/v1',
+    /* Khoá cũ từ thời VSKH — đọc một lần rồi chuyển sang khoá mới,
+       để kế hoạch và tuỳ chọn đã lưu không mất khi đổi tên. */
+    legacyStorageKey: 'vskh-tactical-map/board/v1',
+    legacyThemeKey: 'vskh-tactical-map/theme/v1',
+    legacySessionKey: 'vskh-tactical-map/session/v1',
     /* Mật khẩu demo phía client — chỉ để phân vai, KHÔNG phải bảo mật thật. */
-    leaderCode: 'vskh2026'
+    leaderCode: 'nth2026'
   };
 
-  global.VSKHConfig = {
+  /* Đọc khoá mới; nếu trống thì lấy khoá cũ và dời sang khoá mới. */
+  function readMigrated(key, legacyKey) {
+    try {
+      var v = global.localStorage.getItem(key);
+      if (v !== null) return v;
+      var old = global.localStorage.getItem(legacyKey);
+      if (old === null) return null;
+      global.localStorage.setItem(key, old);
+      global.localStorage.removeItem(legacyKey);
+      return old;
+    } catch (err) {
+      return null;
+    }
+  }
+
+  global.NTHConfig = {
+    readMigrated: readMigrated,
     SIDES: SIDES,
     THEMES: THEMES,
     PEN_COLORS: PEN_COLORS,

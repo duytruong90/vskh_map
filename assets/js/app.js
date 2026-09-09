@@ -2,9 +2,9 @@
 (function (global) {
   'use strict';
 
-  var CFG = global.VSKHConfig;
-  var Icons = global.VSKHIcons;
-  var SU = global.VSKHStore;
+  var CFG = global.NTHConfig;
+  var Icons = global.NTHIcons;
+  var SU = global.NTHStore;
   var D = CFG.DEFAULTS;
 
   var $ = function (id) { return document.getElementById(id); };
@@ -35,7 +35,7 @@
 
   function readSession() {
     try {
-      var raw = global.localStorage.getItem(D.sessionKey);
+      var raw = CFG.readMigrated(D.sessionKey, D.legacySessionKey);
       if (!raw) return null;
       var s = JSON.parse(raw);
       if (s && typeof s.name === 'string' && (s.role === 'leader' || s.role === 'member')) return s;
@@ -88,7 +88,7 @@
 
   function readTheme() {
     try {
-      var v = global.localStorage.getItem(D.themeKey);
+      var v = CFG.readMigrated(D.themeKey, D.legacyThemeKey);
       if (v && CFG.theme(v).id === v) return v;
     } catch (err) { /* bỏ qua, dùng mặc định */ }
     return D.defaultTheme;
@@ -440,7 +440,7 @@
   function bindPlanControls() {
     $('btn-export-json').addEventListener('click', function () {
       var blob = new Blob([JSON.stringify(store.state, null, 2)], { type: 'application/json' });
-      download(blob, 'vskh-tactical-' + stamp() + '.json');
+      download(blob, 'nth-tactical-' + stamp() + '.json');
       toast('Đã xuất file kế hoạch.');
     });
 
@@ -473,7 +473,7 @@
       board.exportPng().then(function (canvas) {
         canvas.toBlob(function (blob) {
           if (!blob) { toast('Không tạo được ảnh.', 'error'); setStatus('Sẵn sàng'); return; }
-          download(blob, 'vskh-tactical-' + stamp() + '.png');
+          download(blob, 'nth-tactical-' + stamp() + '.png');
           setStatus('Sẵn sàng');
           toast('Đã xuất ảnh PNG.');
         }, 'image/png');
@@ -621,7 +621,7 @@
     store.load();
     loadFromHash();
 
-    board = new global.VSKHBoard({
+    board = new global.NTHBoard({
       viewport: $('viewport'),
       world: $('world'),
       image: $('map-image'),
@@ -643,7 +643,7 @@
     });
 
     /* Cửa sổ gỡ lỗi / tự động hoá. */
-    global.VSKHApp = { store: store, board: board };
+    global.NTHApp = { store: store, board: board };
 
     store.subscribe(function (state, reason) {
       $('marker-count').textContent = state.markers.length;

@@ -2,9 +2,9 @@
 (function (global) {
   'use strict';
 
-  var CFG = global.VSKHConfig;
-  var Icons = global.VSKHIcons;
-  var SU = global.VSKHStore;
+  var CFG = global.NTHConfig;
+  var Icons = global.NTHIcons;
+  var SU = global.NTHStore;
   var CANVAS_RES = 2;      /* Độ phân giải lớp vẽ so với kích thước bản đồ. */
   var MARKER_W = 44;
   var MARKER_H = 58;
@@ -568,5 +568,5 @@
     });
   };
 
-  global.VSKHBoard = Board;
+  global.NTHBoard = Board;
 })(window);

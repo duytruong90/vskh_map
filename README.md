@@ -1,4 +1,4 @@
-# VSKH Tactical Map
+# NTH Tactical Map
 
 Bản đồ chiến thuật tương tác cho bang chiến — kéo thả đội hình lên bản đồ, vẽ hướng
 tấn công, lưu và chia sẻ kế hoạch. Chạy hoàn toàn phía trình duyệt: không cần server,
@@ -17,7 +17,7 @@ Mở thẳng `index.html` bằng trình duyệt (`file://`) cũng chạy đượ
 lưu, xuất/nhập `.json` đều bình thường. Riêng **Xuất ảnh PNG** thì không — trình duyệt
 chặn đọc canvas có ảnh `file://`, nên tính năng này cần chạy qua `http://`.
 
-Đăng nhập demo: chọn **Chỉ huy** và nhập mã `vskh2026`, hoặc chọn **Thành viên** (chỉ xem)
+Đăng nhập demo: chọn **Chỉ huy** và nhập mã `nth2026`, hoặc chọn **Thành viên** (chỉ xem)
 và không cần mã. Mã này nằm ở `DEFAULTS.leaderCode` trong `assets/js/config.js`.
 
 > Lớp đăng nhập chạy hoàn toàn trên trình duyệt và chỉ dùng để phân vai chỉ huy /
@@ -77,6 +77,20 @@ sed -i 's/?v=2\.0\.1/?v=2.0.2/g' index.html     # Linux/macOS
 Quên tăng số thì người đã mở trang trước đó có thể vẫn thấy giao diện cũ cho tới khi họ
 tự bấm Ctrl+F5.
 
+## Đổi tên VSKH → NTH
+
+Toàn bộ chuỗi `VSKH` / `vskh` đã đổi thành `NTH` / `nth`: tiêu đề, tên biến toàn cục
+(`NTHConfig`, `NTHStore`, `NTHBoard`, `NTHApp`), tên file xuất ra (`nth-tactical-*.png`,
+`*.json`), khoá lưu trữ và mã chỉ huy (`vskh2026` → `nth2026`).
+
+Khoá `localStorage` đổi theo, nên bản cũ và bản mới không dùng chung chỗ lưu. Để kế
+hoạch đã lưu không mất, lần chạy đầu tiên sẽ **tự chuyển** dữ liệu từ khoá cũ sang khoá
+mới (`NTHConfig.readMigrated` trong `assets/js/config.js`) rồi xoá khoá cũ. Người dùng
+không phải làm gì.
+
+Riêng địa chỉ kho mã (`github.com/duytruong90/vskh_map`) giữ nguyên vì tên repo trên
+GitHub chưa đổi — sửa chuỗi đó sẽ làm lệnh `git clone` ở trên chạy sai.
+
 ## Chủ đề màu
 
 Bộ chọn chủ đề nằm ngay sau huy hiệu phiên bản trên thanh trên cùng. Bốn lựa chọn, mỗi
@@ -95,7 +109,7 @@ Quy tắc:
   Bố cục, khoảng cách, chữ và chuyển động không đổi.
 - **Ba màu phe không bao giờ đổi.** Đỏ / Xanh / Trung Lập là dữ liệu bản đồ, không phải
   trang trí — nên `--red`, `--blue`, `--gold` chỉ khai báo một lần ở `:root`.
-- Lựa chọn lưu riêng theo từng trình duyệt (`vskh-tactical-map/theme/v1`), không nằm
+- Lựa chọn lưu riêng theo từng trình duyệt (`nth-tactical-map/theme/v1`), không nằm
   trong file kế hoạch nên không ảnh hưởng người khác.
 - Ảnh PNG xuất ra không đổi theo chủ đề: chỉ có bản đồ, nét vẽ và ký hiệu.
 

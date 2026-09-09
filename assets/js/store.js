@@ -2,7 +2,7 @@
 (function (global) {
   'use strict';
 
-  var CFG = global.VSKHConfig;
+  var CFG = global.NTHConfig;
   var D = CFG.DEFAULTS;
   var HISTORY_LIMIT = 60;
 
@@ -89,7 +89,7 @@
 
   Store.prototype.load = function () {
     try {
-      var raw = global.localStorage.getItem(D.storageKey);
+      var raw = CFG.readMigrated(D.storageKey, D.legacyStorageKey);
       if (raw) this.state = sanitize(JSON.parse(raw));
     } catch (err) {
       console.warn('Không đọc được dữ liệu đã lưu:', err);
@@ -166,5 +166,5 @@
     this.emit(reason || 'replace');
   };
 
-  global.VSKHStore = { Store: Store, uid: uid, blank: blank, sanitize: sanitize, clone: clone };
+  global.NTHStore = { Store: Store, uid: uid, blank: blank, sanitize: sanitize, clone: clone };
 })(window);

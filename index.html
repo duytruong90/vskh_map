@@ -3,16 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>VSKH Tactical Map — Bản đồ chiến thuật bang chiến</title>
+<title>NTH Tactical Map — Bản đồ chiến thuật bang chiến</title>
 <meta name="description" content="Bản đồ chiến thuật tương tác: kéo thả đội hình, vẽ hướng tấn công, chia sẻ kế hoạch bang chiến.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 2 L28 7 v9 c0 7-5 12-12 14C9 28 4 23 4 16V7Z' fill='%234fd1a5'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="assets/css/fonts.css?v=2.0.2">
-<link rel="stylesheet" href="assets/css/styles.css?v=2.0.2">
+<link rel="stylesheet" href="assets/css/fonts.css?v=2.1.0">
+<link rel="stylesheet" href="assets/css/styles.css?v=2.1.0">
 <script>
   /* Đặt chủ đề trước khi vẽ khung hình đầu tiên để không loé màu mặc định. */
   try {
-    var vskhTheme = localStorage.getItem('vskh-tactical-map/theme/v1');
-    if (vskhTheme && vskhTheme !== 'jade') document.documentElement.setAttribute('data-theme', vskhTheme);
+    var nthTheme = localStorage.getItem('nth-tactical-map/theme/v1')
+      || localStorage.getItem('vskh-tactical-map/theme/v1');
+    if (nthTheme && nthTheme !== 'jade') document.documentElement.setAttribute('data-theme', nthTheme);
   } catch (e) { /* trình duyệt chặn lưu trữ — dùng mặc định */ }
 </script>
 </head>
@@ -26,7 +27,7 @@
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 16 l4 4 l7-8"/></svg>
       </span>
       <div>
-        <h1>VSKH Tactical Map</h1>
+        <h1>NTH Tactical Map</h1>
         <p>Bản đồ chiến thuật bang chiến</p>
       </div>
     </div>
@@ -66,7 +67,7 @@
       <span class="brand-mark">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 16 l4 4 l7-8"/></svg>
       </span>
-      <h1 class="brand-text">VSKH Tactical Map</h1>
+      <h1 class="brand-text">NTH Tactical Map</h1>
       <span class="brand-sub">BANG CHIẾN</span>
       <span class="version">v2.0</span>
 
@@ -261,10 +262,10 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-<script src="assets/js/config.js?v=2.0.2"></script>
-<script src="assets/js/icons.js?v=2.0.2"></script>
-<script src="assets/js/store.js?v=2.0.2"></script>
-<script src="assets/js/board.js?v=2.0.2"></script>
-<script src="assets/js/app.js?v=2.0.2"></script>
+<script src="assets/js/config.js?v=2.1.0"></script>
+<script src="assets/js/icons.js?v=2.1.0"></script>
+<script src="assets/js/store.js?v=2.1.0"></script>
+<script src="assets/js/board.js?v=2.1.0"></script>
+<script src="assets/js/app.js?v=2.1.0"></script>
 </body>
 </html>
