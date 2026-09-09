@@ -6,8 +6,15 @@
 <title>VSKH Tactical Map — Bản đồ chiến thuật bang chiến</title>
 <meta name="description" content="Bản đồ chiến thuật tương tác: kéo thả đội hình, vẽ hướng tấn công, chia sẻ kế hoạch bang chiến.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 2 L28 7 v9 c0 7-5 12-12 14C9 28 4 23 4 16V7Z' fill='%234fd1a5'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="assets/css/fonts.css?v=2.0.1">
-<link rel="stylesheet" href="assets/css/styles.css?v=2.0.1">
+<link rel="stylesheet" href="assets/css/fonts.css?v=2.0.2">
+<link rel="stylesheet" href="assets/css/styles.css?v=2.0.2">
+<script>
+  /* Đặt chủ đề trước khi vẽ khung hình đầu tiên để không loé màu mặc định. */
+  try {
+    var vskhTheme = localStorage.getItem('vskh-tactical-map/theme/v1');
+    if (vskhTheme && vskhTheme !== 'jade') document.documentElement.setAttribute('data-theme', vskhTheme);
+  } catch (e) { /* trình duyệt chặn lưu trữ — dùng mặc định */ }
+</script>
 </head>
 <body>
 
@@ -62,6 +69,15 @@
       <h1 class="brand-text">VSKH Tactical Map</h1>
       <span class="brand-sub">BANG CHIẾN</span>
       <span class="version">v2.0</span>
+
+      <div class="theme-picker" id="theme-picker">
+        <button class="theme-btn" id="theme-btn" aria-haspopup="listbox" aria-expanded="false" aria-label="Chủ đề màu">
+          <span class="theme-swatch" id="theme-swatch"></span>
+          <span class="theme-name" id="theme-current">Bích Ngọc</span>
+          <svg class="theme-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="theme-menu" id="theme-menu" role="listbox" aria-label="Chọn chủ đề màu" hidden></div>
+      </div>
     </div>
 
     <div class="topbar-actions">
@@ -245,10 +261,10 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-<script src="assets/js/config.js?v=2.0.1"></script>
-<script src="assets/js/icons.js?v=2.0.1"></script>
-<script src="assets/js/store.js?v=2.0.1"></script>
-<script src="assets/js/board.js?v=2.0.1"></script>
-<script src="assets/js/app.js?v=2.0.1"></script>
+<script src="assets/js/config.js?v=2.0.2"></script>
+<script src="assets/js/icons.js?v=2.0.2"></script>
+<script src="assets/js/store.js?v=2.0.2"></script>
+<script src="assets/js/board.js?v=2.0.2"></script>
+<script src="assets/js/app.js?v=2.0.2"></script>
 </body>
 </html>

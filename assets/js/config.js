@@ -9,6 +9,14 @@
     { id: 'white', label: 'Ghi Chú',  color: '#e8e6df', deep: '#5c5a52' }
   ];
 
+  /* Chủ đề màu — chỉ đổi token giao diện, không đụng màu phe. */
+  var THEMES = [
+    { id: 'jade',     name: 'Bích Ngọc', en: 'Jade · mặc định',   swatch: '#4fd1a5' },
+    { id: 'gold',     name: 'Hoàng Kim', en: 'Imperial Gold',     swatch: '#ffd76a' },
+    { id: 'azure',    name: 'Thanh Vân', en: 'Azure',             swatch: '#6c8cff' },
+    { id: 'cinnabar', name: 'Chu Sa',    en: 'Cinnabar',          swatch: '#ff7a3c' }
+  ];
+
   var PEN_COLORS = [
     { id: 'red',   label: 'Đỏ',    color: '#ff4d42' },
     { id: 'blue',  label: 'Xanh',  color: '#3fb6ec' },
@@ -116,6 +124,8 @@
     maxZoom: 6,
     markerScale: 1,
     storageKey: 'vskh-tactical-map/board/v1',
+    themeKey: 'vskh-tactical-map/theme/v1',
+    defaultTheme: 'jade',
     sessionKey: 'vskh-tactical-map/session/v1',
     /* Mật khẩu demo phía client — chỉ để phân vai, KHÔNG phải bảo mật thật. */
     leaderCode: 'vskh2026'
@@ -123,6 +133,7 @@
 
   global.VSKHConfig = {
     SIDES: SIDES,
+    THEMES: THEMES,
     PEN_COLORS: PEN_COLORS,
     PEN_WIDTHS: PEN_WIDTHS,
     ICONS: ICONS,
@@ -130,6 +141,10 @@
     icon: function (id) {
       for (var i = 0; i < ICONS.length; i++) { if (ICONS[i].id === id) return ICONS[i]; }
       return null;
+    },
+    theme: function (id) {
+      for (var i = 0; i < THEMES.length; i++) { if (THEMES[i].id === id) return THEMES[i]; }
+      return THEMES[0];
     },
     side: function (id) {
       for (var i = 0; i < SIDES.length; i++) { if (SIDES[i].id === id) return SIDES[i]; }

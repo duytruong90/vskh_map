@@ -77,6 +77,31 @@ sed -i 's/?v=2\.0\.1/?v=2.0.2/g' index.html     # Linux/macOS
 Quên tăng số thì người đã mở trang trước đó có thể vẫn thấy giao diện cũ cho tới khi họ
 tự bấm Ctrl+F5.
 
+## Chủ đề màu
+
+Bộ chọn chủ đề nằm ngay sau huy hiệu phiên bản trên thanh trên cùng. Bốn lựa chọn, mỗi
+cái lấy một điển tích võ hiệp:
+
+| Chủ đề | Màu nhấn | Điển tích |
+| --- | --- | --- |
+| **Bích Ngọc** (mặc định) | `#4fd1a5` | ngọc bích |
+| Hoàng Kim | `#ffd76a` | chiếu chỉ hoàng kim trên nền sơn mài |
+| Thanh Vân | `#6c8cff` | thép lạnh và mây đêm trên sông |
+| Chu Sa | `#ff7a3c` | ấn son chu sa và đèn lồng |
+
+Quy tắc:
+
+- Chủ đề chỉ đổi **token màu** trong `assets/css/styles.css` (khối `html[data-theme=...]`).
+  Bố cục, khoảng cách, chữ và chuyển động không đổi.
+- **Ba màu phe không bao giờ đổi.** Đỏ / Xanh / Trung Lập là dữ liệu bản đồ, không phải
+  trang trí — nên `--red`, `--blue`, `--gold` chỉ khai báo một lần ở `:root`.
+- Lựa chọn lưu riêng theo từng trình duyệt (`vskh-tactical-map/theme/v1`), không nằm
+  trong file kế hoạch nên không ảnh hưởng người khác.
+- Ảnh PNG xuất ra không đổi theo chủ đề: chỉ có bản đồ, nét vẽ và ký hiệu.
+
+Thêm chủ đề mới: thêm một mục vào `THEMES` trong `assets/js/config.js` và một khối
+`html[data-theme="<id>"]` trong `styles.css`.
+
 ## Giao diện
 
 Giao diện dùng ngôn ngữ thiết kế **Jade Ops**: bản đồ tràn khung, mọi bảng nổi lên trên

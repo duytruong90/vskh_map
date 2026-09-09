@@ -82,6 +82,82 @@
     $('login-code').value = '';
   }
 
+  /* ---------- Chủ đề màu ---------- */
+
+  var currentTheme = D.defaultTheme;
+
+  function readTheme() {
+    try {
+      var v = global.localStorage.getItem(D.themeKey);
+      if (v && CFG.theme(v).id === v) return v;
+    } catch (err) { /* bỏ qua, dùng mặc định */ }
+    return D.defaultTheme;
+  }
+
+  function themeMenuOpen() { return !$('theme-menu').hidden; }
+
+  function setThemeMenu(open) {
+    $('theme-menu').hidden = !open;
+    $('theme-btn').setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+
+  function renderThemeMenu() {
+    var wrap = $('theme-menu');
+    wrap.innerHTML = '';
+    CFG.THEMES.forEach(function (th) {
+      var active = th.id === currentTheme;
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'theme-option' + (active ? ' is-active' : '');
+      b.setAttribute('role', 'option');
+      b.setAttribute('aria-selected', active ? 'true' : 'false');
+      b.dataset.theme = th.id;
+      /* Dấu tích đứng trước tên; ô luôn chiếm chỗ nên các tên vẫn thẳng hàng. */
+      b.innerHTML =
+        '<svg class="theme-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>' +
+        '<span class="theme-dot" style="background:' + th.swatch + '"></span>' +
+        '<span class="theme-label"><b></b><em></em></span>';
+      b.querySelector('b').textContent = th.name;
+      b.querySelector('em').textContent = th.en;
+      b.addEventListener('click', function () {
+        applyTheme(th.id, true);
+        setThemeMenu(false);
+        $('theme-btn').focus();
+        toast('Chủ đề: ' + th.name);
+      });
+      wrap.appendChild(b);
+    });
+  }
+
+  function applyTheme(id, animate) {
+    var th = CFG.theme(id);
+    var root = document.documentElement;
+    currentTheme = th.id;
+
+    if (animate && !(global.matchMedia && global.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+      root.classList.add('theme-switching');
+      global.setTimeout(function () { root.classList.remove('theme-switching'); }, 300);
+    }
+    if (th.id === D.defaultTheme) root.removeAttribute('data-theme');
+    else root.setAttribute('data-theme', th.id);
+
+    try { global.localStorage.setItem(D.themeKey, th.id); } catch (err) { /* không lưu được thì thôi */ }
+
+    $('theme-current').textContent = th.name;
+    $('theme-swatch').style.background = th.swatch;
+    renderThemeMenu();
+  }
+
+  function bindTheme() {
+    $('theme-btn').addEventListener('click', function (ev) {
+      ev.stopPropagation();
+      setThemeMenu(!themeMenuOpen());
+    });
+    document.addEventListener('click', function (ev) {
+      if (themeMenuOpen() && !$('theme-picker').contains(ev.target)) setThemeMenu(false);
+    });
+    applyTheme(readTheme(), false);
+  }
   /* ---------- Bảng chọn icon ---------- */
 
   var currentSide = 'red';
@@ -501,7 +577,10 @@
         if (board.selectedId) { ev.preventDefault(); board.removeMarker(board.selectedId); }
         return;
       }
-      if (ev.key === 'Escape') { board.setPending(null); markPending(); board.select(null); return; }
+      if (ev.key === 'Escape') {
+        if (themeMenuOpen()) { setThemeMenu(false); $('theme-btn').focus(); return; }
+        board.setPending(null); markPending(); board.select(null); return;
+      }
       if (ev.key === '1') setMode('select');
       if (ev.key === '2') setMode('draw');
       if (ev.key === '3') setMode('pan');
@@ -581,6 +660,7 @@
       board.redrawStrokes();
     });
 
+    bindTheme();
     buildSideChips();
     buildPalette();
     buildToolbar();
